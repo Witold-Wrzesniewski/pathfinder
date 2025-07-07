@@ -8,8 +8,15 @@ body {
   background-image: url('../images/background.jpg');
   background-repeat: no-repeat;
   background-size: cover;
+  color: #fff;
 }
 .pages * {
   background: rgba(0, 0, 0, 0);
   border: none;
+}
+.page {
+  display: none;
+}
+.active {
+  display: block;
 }
