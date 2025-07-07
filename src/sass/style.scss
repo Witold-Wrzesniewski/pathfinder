@@ -21,6 +21,20 @@ body {
   display: block;
 }
 
+/*About*/
+.image {
+  width: 400px;
+  height: 300px;
+  position: relative;
+  overflow: hidden;
+  img {
+    object-fit: cover;
+  }
+}
+.description {
+  position: absolute;
+}
+
 /*Finder*/
 .finder {
   width: 541px;
