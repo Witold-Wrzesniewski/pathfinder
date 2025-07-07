@@ -3,7 +3,7 @@ import {select} from './settings.js';
 
 const app = {
   init: function(element){
-    const page = new Finder(element);
+    const finder = new Finder(element);
     this.initNav();
   },
   initNav: function(){
@@ -20,4 +20,4 @@ const app = {
     }
   },
 }
-app.init();
+app.init(document.querySelector(select.grid));
