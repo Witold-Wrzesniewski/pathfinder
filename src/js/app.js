@@ -20,4 +20,4 @@ const app = {
     }
   },
 }
-app.init(document.querySelector(select.grid));
+app.init(document.querySelector(select.finder));
