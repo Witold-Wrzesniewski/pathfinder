@@ -2,6 +2,7 @@ export const select = {
   navLinks: '.menu a',
   finder: '.finder',
   grid: '.grid',
+  button: '.button',
   pages: '.page',
   templateOf: {
     finder: '#template-finder',

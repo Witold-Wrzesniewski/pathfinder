@@ -4,7 +4,11 @@ class Finder {
   constructor(element){
     const thisFinder = this;
 
+    thisFinder.dom = {};
+    thisFinder.dom.wrapper = element;
+
     thisFinder.grid = [];
+    thisFinder.step = 1;
     thisFinder.initGrid();
     thisFinder.render(element);
   }
@@ -20,16 +24,26 @@ class Finder {
       }
       thisFinder.grid.push(row);
     }
-    console.log(thisFinder.grid);
+    //console.log(thisFinder.grid);
   }
   render(element){
     const thisFinder = this;
-    element.innerHTML = templates.finder({
-      title: 'Test title',
-      btnText: 'Test btnText'
-    });
+    let pageData = null
+    switch(thisFinder.step) {
+      case 1:
+        pageData = { title: 'Draw routes', btnText: 'Finish drawing' };
+        break;
+      case 2:
+        pageData = { title: 'Pick start and finish', btnText: 'Compute' };
+        break;
+      case 3:
+        pageData = { title: 'The best route is', btnText: 'Start again' };
+        break;
+    }
+    element.innerHTML = templates.finder(pageData);
     
     thisFinder.renderGrid(document.querySelector(select.grid));
+    thisFinder.initActions();
   }
   renderGrid(element){
     const thisFinder = this;
@@ -54,6 +68,39 @@ class Finder {
       
       element.appendChild(row);
     }
+  }
+  initActions(){
+    const thisFinder = this;
+    thisFinder.dom.wrapper.querySelector(select.grid).addEventListener('click', function(event){
+      //console.log(event.target.getAttribute('data-row'));
+      switch(thisFinder.step) {
+      case 1:
+        thisFinder.toggleField(event.target);
+        break;
+      case 2:
+        thisFinder.setStartEnd();
+        break;
+      case 3:
+        thisFinder.drawRoute();
+        break;
+    }
+    });
+    thisFinder.dom.wrapper.querySelector(select.button).addEventListener('click', function(event){
+      thisFinder.step = (thisFinder.step + 1) % 3;
+      if (thisFinder.step === 0)
+        thisFinder.step = 3;
+      thisFinder.render(thisFinder.dom.wrapper);
+    });
+    
+  }
+  toggleField(element){
+    console.log('Toggling field');
+  }
+  setStartEnd(){
+    console.log('Setting start and end');
+  }
+  drawRoute(){
+    console.log('Drawing route');
   }
 
 }
