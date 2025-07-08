@@ -12,12 +12,12 @@ const app = {
     for(const link of links){
       link.addEventListener('click', function(event){
         event.preventDefault();
-        const hash = event.target.getAttribute('href')
+        const hash = event.target.getAttribute('href');
         for(let page of pages){
-            page.classList.toggle('active', page.classList.contains(hash.replace('#', '')));
+          page.classList.toggle('active', page.classList.contains(hash.replace('#', '')));
         }
       });
     }
   },
-}
+};
 app.init(document.querySelector(select.finder));

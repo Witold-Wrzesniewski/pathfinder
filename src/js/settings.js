@@ -8,7 +8,7 @@ export const select = {
   templateOf: {
     finder: '#template-finder',
   }
-}
+};
 
 export const templates = {
   finder: Handlebars.compile(document.querySelector(select.templateOf.finder).innerHTML),

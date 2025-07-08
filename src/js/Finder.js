@@ -28,17 +28,17 @@ class Finder {
   }
   render(element){
     const thisFinder = this;
-    let pageData = null
+    let pageData = null;
     switch(thisFinder.step) {
-      case 1:
-        pageData = { title: 'Draw routes', btnText: 'Finish drawing' };
-        break;
-      case 2:
-        pageData = { title: 'Pick start and finish', btnText: 'Compute' };
-        break;
-      case 3:
-        pageData = { title: 'The best route is', btnText: 'Start again' };
-        break;
+    case 1:
+      pageData = { title: 'Draw routes', btnText: 'Finish drawing' };
+      break;
+    case 2:
+      pageData = { title: 'Pick start and finish', btnText: 'Compute' };
+      break;
+    case 3:
+      pageData = { title: 'The best route is', btnText: 'Start again' };
+      break;
     }
     element.innerHTML = templates.finder(pageData);
     
@@ -76,15 +76,15 @@ class Finder {
       //console.log(event.target.getAttribute('data-row'));
       if(event.target.classList.contains('field')){
         switch(thisFinder.step) {
-          case 1:
-            thisFinder.toggleField(event.target);
-            break;
-          case 2:
-            thisFinder.setStartEnd(event.target);
-            break;
-          case 3:
-            thisFinder.drawRoute();
-            break;
+        case 1:
+          thisFinder.toggleField(event.target);
+          break;
+        case 2:
+          thisFinder.setStartEnd(event.target);
+          break;
+        case 3:
+          thisFinder.drawRoute();
+          break;
         }
       }
       

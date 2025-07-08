@@ -10,16 +10,20 @@ body {
   background-size: cover;
   color: #fff;
 }
+
 .pages * {
   background: rgba(0, 0, 0, 0);
   border: none;
 }
+
 .pages {
   margin-bottom: 100px;
 }
+
 .page {
   display: none;
 }
+
 .active {
   display: block;
 }
@@ -30,10 +34,12 @@ body {
   height: 300px;
   position: relative;
   overflow: hidden;
+
   img {
     object-fit: cover;
   }
 }
+
 .description {
   position: absolute;
 }
@@ -43,16 +49,20 @@ body {
   width: 541px;
   margin: 0 auto;
 }
+
 .grid {
   border: 1px solid #fff;
 }
+
 .field {
   border: 1px solid #fff;
   height: 54px;
 }
+
 .header {
   height: 80px;
 }
+
 .alert {
   display: none;
   color: red;
