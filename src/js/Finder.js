@@ -47,6 +47,7 @@ class Finder {
   }
   renderGrid(element){
     const thisFinder = this;
+    element.innerHTML = '';
     for(let i = 0; i < 10; i++){
       const row = document.createElement('div');
       row.classList.add('row');
@@ -73,34 +74,46 @@ class Finder {
     const thisFinder = this;
     thisFinder.dom.wrapper.querySelector(select.grid).addEventListener('click', function(event){
       //console.log(event.target.getAttribute('data-row'));
-      switch(thisFinder.step) {
-      case 1:
-        thisFinder.toggleField(event.target);
-        break;
-      case 2:
-        thisFinder.setStartEnd();
-        break;
-      case 3:
-        thisFinder.drawRoute();
-        break;
-    }
+      if(event.target.classList.contains('field')){
+        switch(thisFinder.step) {
+          case 1:
+            thisFinder.toggleField(event.target);
+            break;
+          case 2:
+            thisFinder.setStartEnd(event.target);
+            break;
+          case 3:
+            thisFinder.drawRoute();
+            break;
+        }
+      }
+      
     });
     thisFinder.dom.wrapper.querySelector(select.button).addEventListener('click', function(event){
-      thisFinder.step = (thisFinder.step + 1) % 3;
-      if (thisFinder.step === 0)
-        thisFinder.step = 3;
+      thisFinder.step = (thisFinder.step + 1) % 3 || 3;
+
       thisFinder.render(thisFinder.dom.wrapper);
     });
     
   }
   toggleField(element){
+    const thisFinder = this;
     console.log('Toggling field');
+    thisFinder.updateGrid(parseInt(element.getAttribute('data-row')), parseInt(element.getAttribute('data-col')), 'enabled');
+    thisFinder.updateGrid(parseInt(element.getAttribute('data-row')), parseInt(element.getAttribute('data-col')), 'checked');
+    thisFinder.renderGrid(document.querySelector(select.grid));
   }
-  setStartEnd(){
+  setStartEnd(element){
+    const thisFinder = this;
     console.log('Setting start and end');
   }
   drawRoute(){
+    const thisFinder = this;
     console.log('Drawing route');
+  }
+  updateGrid(x, y, className){
+    const thisFinder = this;
+    thisFinder.grid[x][y][className] = thisFinder.grid[x][y][className] ? false : true;
   }
 
 }

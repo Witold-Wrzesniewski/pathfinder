@@ -53,7 +53,10 @@
     </div>
   </section>
   <script id="template-finder" type="text/x-handlebars-template">
-    <h1>{{ title }}</h1>
+    <div class="header">
+      <h1>{{ title }}</h1>
+      <div class="alert">Field must adjoin already selected field</div>
+    </div>
     <div class="grid container"></div>
     <div class="button">{{ btnText }}</div>
   </script>

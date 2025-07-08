@@ -3,6 +3,7 @@ export const select = {
   finder: '.finder',
   grid: '.grid',
   button: '.button',
+  alert: '.header.alert',
   pages: '.page',
   templateOf: {
     finder: '#template-finder',
