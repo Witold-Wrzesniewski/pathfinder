@@ -4,22 +4,46 @@ class Finder {
   constructor(element){
     const thisFinder = this;
 
-    this.renderGrid(element);
+    thisFinder.grid = [];
+    thisFinder.initGrid();
+    thisFinder.renderGrid(element);
   }
   renderGrid(element){
-    for(let i = 1; i <= 10; i++){
+    const thisFinder = this;
+    for(let i = 0; i < 10; i++){
       const row = document.createElement('div');
       row.classList.add('row');
 
-      for(let j = 1; j <=10; j++){
+      for(let j = 0; j < 10; j++){
         const field = document.createElement('div');
-        field.innerText = i.toString() + ', ' + j.toString();
         field.classList.add('col', 'field');
+        field.setAttribute('data-row', i);
+        field.setAttribute('data-col', j);
+        
+        for(const className in thisFinder.grid[i][j]){
+          if(thisFinder.grid[i][j][className])
+            field.classList.add(className);
+        }
         row.appendChild(field);
       }
       
       element.appendChild(row);
     }
+  }
+  initGrid(){
+    const thisFinder = this;
+    for(let i = 0; i < 10; i++){
+      const row = [];
+      for(let j = 0; j < 10; j++){
+        row.push({
+          enabled: false,
+          checked: false,
+          test: true
+        });
+      }
+      thisFinder.grid.push(row);
+    }
+    console.log(thisFinder.grid);
   }
 
 }
