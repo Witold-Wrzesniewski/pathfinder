@@ -9,6 +9,7 @@ class Finder {
 
     thisFinder.grid = [];
     thisFinder.step = 1;
+    thisFinder.selectedFields = 0;
     thisFinder.initGrid();
     thisFinder.render(element);
   }
@@ -98,9 +99,24 @@ class Finder {
   }
   toggleField(element){
     const thisFinder = this;
-    console.log('Toggling field');
-    thisFinder.updateGrid(parseInt(element.getAttribute('data-row')), parseInt(element.getAttribute('data-col')), 'enabled');
-    thisFinder.updateGrid(parseInt(element.getAttribute('data-row')), parseInt(element.getAttribute('data-col')), 'checked');
+    const field = {
+      row: parseInt(element.getAttribute('data-row')),
+      col: parseInt(element.getAttribute('data-col'))
+    };
+    //console.log('Toggling field');
+
+    /* If checked */
+      // 1. Uncheck; thisFinder.selectedFields--;
+      // 2. If !(checked neighbours) disable
+
+    /* If enabled */
+     // 1. Check; thisFinder.selectedFields++;
+     // 2. Set enabled to unchecked neighbours
+    /* Else */
+      // Alert
+
+    thisFinder.updateGrid(field.row, field.col, 'enabled');
+    thisFinder.updateGrid(field.row, field.col, 'checked');
     thisFinder.renderGrid(document.querySelector(select.grid));
   }
   setStartEnd(element){
