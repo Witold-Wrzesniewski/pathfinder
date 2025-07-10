@@ -57,6 +57,14 @@ body {
 .field {
   border: 1px solid #fff;
   height: 54px;
+
+  &.enabled {
+    background: rgba(0, 255, 128, 0.5);
+  }
+
+  &.checked{
+    background: orange;
+  }
 }
 
 .header {

@@ -19,7 +19,9 @@ class Finder {
       const row = [];
       for(let j = 0; j < 10; j++){
         row.push({
-          enabled: true,
+          x: i,
+          y: j,
+          enabled: false,
           checked: false,
         });
       }
@@ -64,6 +66,8 @@ class Finder {
             field.classList.add(className);
           else
             field.classList.remove(className);
+          if(field.classList.contains('checked'))
+            field.classList.remove('enabled');
         }
         row.appendChild(field);
       }
@@ -97,26 +101,75 @@ class Finder {
     });
     
   }
+  getNeighbours(field){
+    const thisFinder = this;
+    const neighbours = [];
+    if(field.x - 1 >= 0)
+      neighbours.push(thisFinder.grid[field.x - 1][field.y]);
+    if(field.x + 1 < 10)
+      neighbours.push(thisFinder.grid[field.x + 1][field.y]);
+    if(field.y - 1 >= 0)
+      neighbours.push(thisFinder.grid[field.x][field.y - 1]);
+    if(field.y + 1 < 10)
+      neighbours.push(thisFinder.grid[field.x ][field.y + 1]);
+    return neighbours;
+  }
+  neighboursChecked(field){
+    const thisFinder = this;
+    const neighbours = thisFinder.getNeighbours(field);
+    let neighbourChecked = false;
+    for(const neighbour of neighbours){
+      if(neighbour.checked)
+        neighbourChecked = true;
+    }
+    return neighbourChecked;
+  }
   toggleField(element){
     const thisFinder = this;
-    const field = {
-      row: parseInt(element.getAttribute('data-row')),
-      col: parseInt(element.getAttribute('data-col'))
-    };
-    //console.log('Toggling field');
+
+    const field = thisFinder.grid[parseInt(element.getAttribute('data-row'))][parseInt(element.getAttribute('data-col'))];
+    console.log('Toggling field: ' + field.x + ', ' + field.y);
+    const neighbours = thisFinder.getNeighbours(field);
+
+    let neighbourChecked = thisFinder.neighboursChecked(field);
 
     /* If checked */
-      // 1. Uncheck; thisFinder.selectedFields--;
-      // 2. If !(checked neighbours) disable
+    if(field.checked){
+      field.checked = false;
+      thisFinder.selectedFields--;
+      if(!neighbourChecked){
+        field.enabled = false;
+      }
+      for(const neighbour of neighbours){
+        if(!thisFinder.neighboursChecked(neighbour))
+          neighbour.enabled = false;
+      }
+      thisFinder.renderGrid(document.querySelector(select.grid));
+      return;
+    }
+    // 1. Uncheck; thisFinder.selectedFields--;
+    // 2. If !(checked neighbours) disable
+    // 3. Disable neighbours without checked neighbous
 
-    /* If enabled */
-     // 1. Check; thisFinder.selectedFields++;
-     // 2. Set enabled to unchecked neighbours
+    /* If enabled or first */
+    if(field.enabled || thisFinder.selectedFields == 0){
+      field.checked = true;
+      thisFinder.selectedFields++;
+      for(const neighbour of neighbours){
+        if(!neighbour.checked)
+          neighbour.enabled = true;
+      }
+      thisFinder.renderGrid(document.querySelector(select.grid));
+    }
+    else {
+      console.log('Alert!');
+    }
+    // 1. Check; thisFinder.selectedFields++;
+    // 2. Set enabled to unchecked neighbours
     /* Else */
-      // Alert
+    // Alert
 
-    thisFinder.updateGrid(field.row, field.col, 'enabled');
-    thisFinder.updateGrid(field.row, field.col, 'checked');
+    
     thisFinder.renderGrid(document.querySelector(select.grid));
   }
   setStartEnd(element){
@@ -127,10 +180,10 @@ class Finder {
     const thisFinder = this;
     console.log('Drawing route');
   }
-  updateGrid(x, y, className){
+  /*updateGrid(x, y, className){
     const thisFinder = this;
     thisFinder.grid[x][y][className] = thisFinder.grid[x][y][className] ? false : true;
-  }
+  }*/
 
 }
 export default Finder;
