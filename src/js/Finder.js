@@ -10,6 +10,8 @@ class Finder {
     thisFinder.grid = [];
     thisFinder.step = 1;
     thisFinder.selectedFields = 0;
+    thisFinder.start = null;
+    thisFinder.finish = null;
     thisFinder.initGrid();
     thisFinder.render(element);
   }
@@ -95,7 +97,23 @@ class Finder {
       
     });
     thisFinder.dom.wrapper.querySelector(select.button).addEventListener('click', function(event){
-      thisFinder.step = (thisFinder.step + 1) % 3 || 3;
+      switch(thisFinder.step) {
+        case 1:
+          thisFinder.step = 2;
+          break;
+        case 2:
+          console.log(thisFinder.step, thisFinder.start, thisFinder.finish);
+          if(thisFinder.start && thisFinder.finish){
+            thisFinder.drawRoute();
+            thisFinder.step = 3;
+          }
+          else
+            return;
+          break;
+        case 3:
+          // Clear everything
+          break;
+        }
 
       thisFinder.render(thisFinder.dom.wrapper);
     });
@@ -154,6 +172,7 @@ class Finder {
     /* If enabled or first */
     if(field.enabled || thisFinder.selectedFields == 0){
       field.checked = true;
+      field.enabled = true;
       thisFinder.selectedFields++;
       for(const neighbour of neighbours){
         if(!neighbour.checked)
@@ -174,16 +193,24 @@ class Finder {
   }
   setStartEnd(element){
     const thisFinder = this;
-    console.log('Setting start and end');
+    const field = thisFinder.grid[parseInt(element.getAttribute('data-row'))][parseInt(element.getAttribute('data-col'))];
+    if(field.checked && thisFinder.start == null){
+      thisFinder.start = field;
+      element.classList.add('start-finish');
+    }
+    else if(field.checked && thisFinder.finish == null){
+      thisFinder.finish = field;
+      element.classList.add('start-finish');
+    }
+    //console.log('Setting start and end');
   }
   drawRoute(){
     const thisFinder = this;
-    console.log('Drawing route');
+    thisFinder.findRoutes();
   }
-  /*updateGrid(x, y, className){
-    const thisFinder = this;
-    thisFinder.grid[x][y][className] = thisFinder.grid[x][y][className] ? false : true;
-  }*/
+  findRoutes(){
+    console.log('Finding all routes');
+  }
 
 }
 export default Finder;

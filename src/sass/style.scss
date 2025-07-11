@@ -65,6 +65,10 @@ body {
   &.checked{
     background: orange;
   }
+
+  &.start-finish {
+    background: red;
+  }
 }
 
 .header {
