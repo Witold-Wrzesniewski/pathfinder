@@ -154,13 +154,19 @@ class Finder {
     
     return result;
   }
+  alert(message){
+    const thisFinder = this;
+    thisFinder.dom.alert.innerHTML = templates.alert({alertText: message});
+    thisFinder.dom.alert.classList.add('visible');
+    thisFinder.dom.alert.classList.remove('invisible');
+  }
   toggleField(element){
     const thisFinder = this;
+    thisFinder.dom.alert = document.querySelector(select.alert);
 
+    thisFinder.dom.alert.classList.add('invisible');
     const field = thisFinder.grid[parseInt(element.getAttribute('data-col'))][parseInt(element.getAttribute('data-row'))];
     const neighbours = thisFinder.getNeighbours(field);
-
-    let neighbourChecked = thisFinder.neighboursChecked(field);
 
     if(field.checked){
       field.checked = false;
@@ -174,8 +180,6 @@ class Finder {
       }
       if(checkedNeighboursConnected){
         thisFinder.selectedFields--;
-        if(!neighbourChecked)
-          field.enabled = false;
         for(const neighbour of neighbours){
           if(!thisFinder.neighboursChecked(neighbour))
             neighbour.enabled = false;
@@ -183,7 +187,7 @@ class Finder {
       }
       else{
         field.checked = true;
-        console.log('Field can\'t be unselected.');
+        thisFinder.alert('Field can\'t be unselected.');
       }
       thisFinder.renderGrid(document.querySelector(select.grid));
       return;
@@ -200,7 +204,7 @@ class Finder {
       thisFinder.renderGrid(document.querySelector(select.grid));
     }
     else {
-      console.log('Alert!');
+      thisFinder.alert('Field must adjoin already selected field');
     }
     thisFinder.renderGrid(document.querySelector(select.grid));
   }

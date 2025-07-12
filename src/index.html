@@ -58,12 +58,14 @@
     <div class="wrapper d-none d-md-block">
       <div class="header">
         <h1>{{ title }}</h1>
-        <div class="alert">Field must adjoin already selected field</div>
+        <div class="alert invisible">Placeholder alert</div>
       </div>
       <div class="grid container"></div>
       <div class="button">{{ btnText }}</div>
     </div>
-    
+  </script>
+  <script id="template-alert" type="text/x-handlebars-template">
+    <div>{{ alertText }}</div>
   </script>
   <script src="js/app.js" type="module"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.1.0/handlebars.min.js"></script>
