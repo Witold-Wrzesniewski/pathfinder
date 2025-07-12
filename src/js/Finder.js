@@ -62,11 +62,11 @@ class Finder {
       for(let j = 0; j < 10; j++){
         const field = document.createElement('div');
         field.classList.add('col', 'field');
-        field.setAttribute('data-row', i);
-        field.setAttribute('data-col', j);
+        field.setAttribute('data-col', i);
+        field.setAttribute('data-row', j);
 
         for(const className in thisFinder.grid[i][j]){
-          if(thisFinder.grid[j][i][className])
+          if(thisFinder.grid[i][j][className])
             field.classList.add(className);
           else
             field.classList.remove(className);
@@ -99,22 +99,22 @@ class Finder {
     });
     thisFinder.dom.wrapper.querySelector(select.button).addEventListener('click', function(event){
       switch(thisFinder.step) {
-        case 1:
-          thisFinder.step = 2;
-          break;
-        case 2:
-          if(thisFinder.start && thisFinder.finish){
-            thisFinder.drawRoute(thisFinder.start, thisFinder.finish);
-            thisFinder.step = 3;
-          }
-          else
-            return;
-          break;
-        case 3:
-          //app.init(document.querySelector(select.finder));
-          location.reload();
-          break;
+      case 1:
+        thisFinder.step = 2;
+        break;
+      case 2:
+        if(thisFinder.start && thisFinder.finish){
+          thisFinder.drawRoute(thisFinder.start, thisFinder.finish);
+          thisFinder.step = 3;
         }
+        else
+          return;
+        break;
+      case 3:
+        //app.init(document.querySelector(select.finder));
+        location.reload();
+        break;
+      }
 
       thisFinder.render(thisFinder.dom.wrapper);
     });
@@ -205,6 +205,10 @@ class Finder {
   drawRoute(start, finish){
     const thisFinder = this;
     thisFinder.findRoutes(start, finish, []);
+    thisFinder.routes.sort((a, b) => a.length - b.length);
+    for(const field of thisFinder.routes[0])
+      field.route = true;
+    thisFinder.renderGrid(document.querySelector(select.grid));
     console.log(thisFinder.routes);
   }
   findRoutes(start, finish, currentRoute){
