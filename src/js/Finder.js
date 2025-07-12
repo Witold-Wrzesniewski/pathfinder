@@ -143,6 +143,17 @@ class Finder {
     }
     return neighbourChecked;
   }
+  checkConnection(field1, field2){
+    const thisFinder = this;
+    thisFinder.findRoutes(field1, field2, []);
+    let result = false;
+
+    if(thisFinder.routes.length > 0)
+      result = true;
+    thisFinder.routes = [];
+    
+    return result;
+  }
   toggleField(element){
     const thisFinder = this;
 
@@ -151,25 +162,33 @@ class Finder {
 
     let neighbourChecked = thisFinder.neighboursChecked(field);
 
-    /* If checked */
     if(field.checked){
       field.checked = false;
-      thisFinder.selectedFields--;
-      if(!neighbourChecked){
-        field.enabled = false;
+      let checkedNeighboursConnected = true;
+      const checkedNeighbours = neighbours.filter((neighbour) => neighbour.checked);
+
+      for(let i = -1; i < checkedNeighbours.length - 1; i++){
+        checkedNeighboursConnected = thisFinder.checkConnection(checkedNeighbours.at(i), checkedNeighbours.at(i+1));
+        if(!checkedNeighboursConnected)
+          break;
       }
-      for(const neighbour of neighbours){
-        if(!thisFinder.neighboursChecked(neighbour))
-          neighbour.enabled = false;
+      if(checkedNeighboursConnected){
+        thisFinder.selectedFields--;
+        if(!neighbourChecked)
+          field.enabled = false;
+        for(const neighbour of neighbours){
+          if(!thisFinder.neighboursChecked(neighbour))
+            neighbour.enabled = false;
+        }
+      }
+      else{
+        field.checked = true;
+        console.log('Field can\'t be unselected.');
       }
       thisFinder.renderGrid(document.querySelector(select.grid));
       return;
     }
-    // 1. Uncheck; thisFinder.selectedFields--;
-    // 2. If !(checked neighbours) disable
-    // 3. Disable neighbours without checked neighbous
 
-    /* If enabled or first */
     if(field.enabled || thisFinder.selectedFields == 0){
       field.checked = true;
       field.enabled = true;
@@ -183,11 +202,6 @@ class Finder {
     else {
       console.log('Alert!');
     }
-    // 1. Check; thisFinder.selectedFields++;
-    // 2. Set enabled to unchecked neighbours
-    /* Else */
-    // Alert
-
     thisFinder.renderGrid(document.querySelector(select.grid));
   }
   setStartEnd(element){
