@@ -1,4 +1,5 @@
 import {select, templates} from './settings.js';
+import {app} from './app.js';
 
 class Finder {
   constructor(element){
@@ -12,6 +13,7 @@ class Finder {
     thisFinder.selectedFields = 0;
     thisFinder.start = null;
     thisFinder.finish = null;
+    thisFinder.routes = [];
     thisFinder.initGrid();
     thisFinder.render(element);
   }
@@ -29,7 +31,6 @@ class Finder {
       }
       thisFinder.grid.push(row);
     }
-    //console.log(thisFinder.grid);
   }
   render(element){
     const thisFinder = this;
@@ -45,6 +46,7 @@ class Finder {
       pageData = { title: 'The best route is', btnText: 'Start again' };
       break;
     }
+    element.innerHTML = '';
     element.innerHTML = templates.finder(pageData);
     
     thisFinder.renderGrid(document.querySelector(select.grid));
@@ -64,7 +66,7 @@ class Finder {
         field.setAttribute('data-col', j);
 
         for(const className in thisFinder.grid[i][j]){
-          if(thisFinder.grid[i][j][className])
+          if(thisFinder.grid[j][i][className])
             field.classList.add(className);
           else
             field.classList.remove(className);
@@ -80,7 +82,6 @@ class Finder {
   initActions(){
     const thisFinder = this;
     thisFinder.dom.wrapper.querySelector(select.grid).addEventListener('click', function(event){
-      //console.log(event.target.getAttribute('data-row'));
       if(event.target.classList.contains('field')){
         switch(thisFinder.step) {
         case 1:
@@ -102,16 +103,16 @@ class Finder {
           thisFinder.step = 2;
           break;
         case 2:
-          console.log(thisFinder.step, thisFinder.start, thisFinder.finish);
           if(thisFinder.start && thisFinder.finish){
-            thisFinder.drawRoute();
+            thisFinder.drawRoute(thisFinder.start, thisFinder.finish);
             thisFinder.step = 3;
           }
           else
             return;
           break;
         case 3:
-          // Clear everything
+          //app.init(document.querySelector(select.finder));
+          location.reload();
           break;
         }
 
@@ -145,8 +146,7 @@ class Finder {
   toggleField(element){
     const thisFinder = this;
 
-    const field = thisFinder.grid[parseInt(element.getAttribute('data-row'))][parseInt(element.getAttribute('data-col'))];
-    console.log('Toggling field: ' + field.x + ', ' + field.y);
+    const field = thisFinder.grid[parseInt(element.getAttribute('data-col'))][parseInt(element.getAttribute('data-row'))];
     const neighbours = thisFinder.getNeighbours(field);
 
     let neighbourChecked = thisFinder.neighboursChecked(field);
@@ -188,12 +188,11 @@ class Finder {
     /* Else */
     // Alert
 
-    
     thisFinder.renderGrid(document.querySelector(select.grid));
   }
   setStartEnd(element){
     const thisFinder = this;
-    const field = thisFinder.grid[parseInt(element.getAttribute('data-row'))][parseInt(element.getAttribute('data-col'))];
+    const field = thisFinder.grid[parseInt(element.getAttribute('data-col'))][parseInt(element.getAttribute('data-row'))];
     if(field.checked && thisFinder.start == null){
       thisFinder.start = field;
       element.classList.add('start-finish');
@@ -202,14 +201,37 @@ class Finder {
       thisFinder.finish = field;
       element.classList.add('start-finish');
     }
-    //console.log('Setting start and end');
   }
-  drawRoute(){
+  drawRoute(start, finish){
     const thisFinder = this;
-    thisFinder.findRoutes();
+    thisFinder.findRoutes(start, finish, []);
+    console.log(thisFinder.routes);
   }
-  findRoutes(){
-    console.log('Finding all routes');
+  findRoutes(start, finish, currentRoute){
+    const thisFinder = this;
+
+    if(currentRoute.includes(start))
+      return;
+
+    currentRoute.push(start);
+    if(start === finish){
+      thisFinder.routes.push(currentRoute);
+      return;
+    }
+
+    const nextFields = [];
+    if(start.x - 1 >= 0 && thisFinder.grid[start.x - 1][start.y].checked)
+      nextFields.push(thisFinder.grid[start.x - 1][start.y]);
+    if(start.x + 1 < 10 && thisFinder.grid[start.x + 1][start.y].checked)
+      nextFields.push(thisFinder.grid[start.x + 1][start.y]);
+    if(start.y - 1 >= 0 && thisFinder.grid[start.x][start.y - 1].checked)
+      nextFields.push(thisFinder.grid[start.x][start.y - 1]);
+    if(start.y + 1 < 10 && thisFinder.grid[start.x][start.y + 1].checked)
+      nextFields.push(thisFinder.grid[start.x][start.y + 1]);
+
+    nextFields.forEach(function(field){
+      thisFinder.findRoutes(field, finish, [...currentRoute]);
+    });
   }
 
 }

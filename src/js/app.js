@@ -1,10 +1,11 @@
 import Finder from './Finder.js';
 import {select} from './settings.js';
 
-const app = {
+export const app = {
   init: function(element){
     const finder = new Finder(element);
     this.initNav();
+    //console.log(finder);
   },
   initNav: function(){
     const links = document.querySelectorAll(select.navLinks);
