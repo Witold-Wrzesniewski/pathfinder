@@ -14,7 +14,7 @@ export const app = {
         event.preventDefault();
         const hash = event.target.getAttribute('href');
         for(let page of pages){
-          page.classList.toggle('active', page.classList.contains(hash.replace('#', '')));
+          page.classList.toggle('d-none', !page.classList.contains(hash.replace('#', '')));
         }
       });
     }

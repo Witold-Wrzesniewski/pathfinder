@@ -34,7 +34,7 @@
     </div>
   </header>
   <section class="pages">
-    <div class="page about active">
+    <div class="page about">
       <div class="card-container d-flex m-5" data-aos="fade-right">
         <div class="card">
           <div class="image">
@@ -58,12 +58,14 @@
         </div>
       </div>
     </div>
-    <div class="page finder">
+    <div class="page finder d-none">
     </div>
   </section>
   <footer>All rights reserved</footer>
   <script id="template-finder" type="text/x-handlebars-template">
-    <div class="mobile d-md-none">Page is desktop only</div>
+    <div class="mobile d-md-none">
+      <h1>This page is browser only</h1>
+    </div>
     <div class="wrapper d-none d-md-block">
       <div class="header">
         <h1>{{ title }}</h1>
