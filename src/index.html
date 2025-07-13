@@ -34,7 +34,7 @@
   </header>
   <section class="pages">
     <div class="page about">
-      <div class="card-container d-flex">
+      <div class="card-container d-flex m-5">
         <div class="card">
           <div class="image">
             <img src="./images/1.jpg" alt="">
@@ -45,7 +45,7 @@
           </div>
         </div>
       </div>
-      <div class="card-container d-flex justify-content-end">
+      <div class="card-container align-right d-flex justify-content-end m-5">
         <div class="card">
           <div class="image">
             <img src="./images/2.jpg" alt="">
@@ -60,6 +60,7 @@
     <div class="page finder active">
     </div>
   </section>
+  <footer>All rights reserved</footer>
   <script id="template-finder" type="text/x-handlebars-template">
     <div class="mobile d-md-none">Page is desktop only</div>
     <div class="wrapper d-none d-md-block">
@@ -68,7 +69,7 @@
         <div class="alert invisible">Placeholder alert</div>
       </div>
       <div class="grid container"></div>
-      <div class="button">{{ btnText }}</div>
+      <div class="button btn btn-lg">{{ btnText }}</div>
     </div>
   </script>
   <script id="template-alert" type="text/x-handlebars-template">

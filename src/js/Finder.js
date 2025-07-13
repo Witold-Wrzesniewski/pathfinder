@@ -199,6 +199,8 @@ class Finder {
           if(!thisFinder.neighboursChecked(neighbour))
             neighbour.enabled = false;
         }
+        if(!thisFinder.neighboursChecked(field))
+            field.enabled = false;
       }
       else{
         field.checked = true;

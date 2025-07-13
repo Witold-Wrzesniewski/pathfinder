@@ -4,11 +4,48 @@
 
 body {
   margin: 0;
-  background: lightblue;
+  background: #222;
   background-image: url('../images/background.jpg');
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: contain;
   color: #fff;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+h3 {
+  font-size: 1em;
+}
+
+header {
+  margin-top: 20px;
+  margin-bottom: 100px;
+  .title {
+    width: min-content;
+    margin: 50px auto;
+    h1 {
+      font-size: 3em;
+      font-weight: 900;
+      letter-spacing: 0.5em;
+    }
+    h3 {
+      text-align: right;
+      margin-right: 0.8em;
+    }
+  }
+  li {
+    display: inline-block;
+    a {
+      color:#fff;
+      text-decoration: none;
+      font-size: 1.3em;
+    }
+    &:first-child::after {
+      content: ""; 
+      display: inline-block; 
+      width: 40px;
+    }
+  }
 }
 
 .pages * {
@@ -22,32 +59,52 @@ body {
 
 .page {
   display: none;
-}
-
-.active {
-  display: block;
-}
-
-/*About*/
-.image {
-  width: 400px;
-  height: 300px;
-  position: relative;
-  overflow: hidden;
-
-  img {
-    object-fit: cover;
+  &.active {
+    display: block;
   }
 }
 
-.description {
-  position: absolute;
+/*About*/
+.about {
+  text-align: left;
+}
+.card {
+  position: relative;
+  .image {
+    width: 400px;
+    height: 300px;
+    position: relative;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .description {
+    position: absolute;
+    h3 {
+      text-transform: none;
+    }
+  }
+}
+
+.card-container.align-right {
+  .image {
+    width: 600px;
+  }
 }
 
 /*Finder*/
 .finder {
   width: 541px;
   margin: 0 auto;
+}
+
+.wrapper {
+  text-align: center;
 }
 
 .grid {
@@ -81,16 +138,22 @@ body {
   font-weight: bold;
 }
 
+.button {
+  background: orange;
+  color: #fff;
+  margin: 50px auto;
+}
+
 /* Summary */
 .summary {
   background: rgba(0, 0, 0, 0.5);
   width: 100%;
   height: 100%;
+  margin-top: -20px;
   position: fixed;
   .popup {
     color: #000;
     position: relative;
-    text-transform: uppercase;
     top: 50%;
     transform: translateY(-50%);
     background: #fff;
@@ -103,6 +166,10 @@ body {
       height: 50px;
       left: 100%;
       transform: translateX(-100%);
+      &:hover {
+        background: #aaa;
+        cursor: pointer;
+      }
       img {
         width: 100%;
         height: 100%;
@@ -116,4 +183,8 @@ body {
       margin-bottom: 50px;
     }
   }
+}
+
+footer {
+  text-transform: none;
 }
