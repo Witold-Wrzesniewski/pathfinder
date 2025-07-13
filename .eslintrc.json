@@ -33,6 +33,7 @@
         ]
     },
     "globals": {
-      "Handlebars": false
+      "Handlebars": false,
+      "AOS": false
     }
 }

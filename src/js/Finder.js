@@ -1,5 +1,4 @@
 import {select, templates} from './settings.js';
-import {app} from './app.js';
 
 class Finder {
   constructor(element){
@@ -125,8 +124,14 @@ class Finder {
           return;
         break;
       case 3:
-        //app.init(document.querySelector(select.finder));
-        location.reload();
+        thisFinder.grid = [];
+        thisFinder.step = 1;
+        thisFinder.selectedFields = 0;
+        thisFinder.start = null;
+        thisFinder.finish = null;
+        thisFinder.routes = [];
+        thisFinder.initGrid();
+        thisFinder.render(document.querySelector(select.finder));
         break;
       }
 
@@ -201,7 +206,7 @@ class Finder {
             neighbour.enabled = false;
         }
         if(!thisFinder.neighboursChecked(field))
-            field.enabled = false;
+          field.enabled = false;
       }
       else{
         field.checked = true;
@@ -245,7 +250,6 @@ class Finder {
     for(const field of thisFinder.routes[0])
       field.route = true;
     thisFinder.renderGrid(document.querySelector(select.grid));
-    console.log(thisFinder.routes);
   }
   findRoutes(start, finish, currentRoute){
     const thisFinder = this;
