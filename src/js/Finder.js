@@ -249,6 +249,10 @@ class Finder {
     thisFinder.routes.sort((a, b) => a.length - b.length);
     for(const field of thisFinder.routes[0])
       field.route = true;
+    for(const row of thisFinder.grid){
+      for(const field of row)
+        field.enabled = false;
+    }
     thisFinder.renderGrid(document.querySelector(select.grid));
   }
   findRoutes(start, finish, currentRoute){
