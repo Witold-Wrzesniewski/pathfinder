@@ -67,6 +67,7 @@ header {
 /*About*/
 .about {
   text-align: left;
+  margin-top: 300px;
 }
 .card {
   position: relative;
@@ -85,6 +86,12 @@ header {
 
   .description {
     position: absolute;
+    top: 200px;
+    left: 200px;
+    overflow: visible;
+    h2, h3 {
+      width: max-content;
+    }
     h3 {
       text-transform: none;
     }
@@ -92,6 +99,10 @@ header {
 }
 
 .card-container.align-right {
+  .description {
+    top: 50px;
+    left: -100px;
+  }
   .image {
     width: 600px;
   }

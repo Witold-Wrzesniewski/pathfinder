@@ -8,6 +8,7 @@
   <title>Pathfinder</title>
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
 </head>
 
@@ -33,8 +34,8 @@
     </div>
   </header>
   <section class="pages">
-    <div class="page about">
-      <div class="card-container d-flex m-5">
+    <div class="page about active">
+      <div class="card-container d-flex m-5" data-aos="fade-right">
         <div class="card">
           <div class="image">
             <img src="./images/1.jpg" alt="">
@@ -45,7 +46,7 @@
           </div>
         </div>
       </div>
-      <div class="card-container align-right d-flex justify-content-end m-5">
+      <div class="card-container align-right d-flex justify-content-end m-5" data-aos="fade-left">
         <div class="card">
           <div class="image">
             <img src="./images/2.jpg" alt="">
@@ -57,7 +58,7 @@
         </div>
       </div>
     </div>
-    <div class="page finder active">
+    <div class="page finder">
     </div>
   </section>
   <footer>All rights reserved</footer>
@@ -84,5 +85,6 @@
   </script>
   <script src="js/app.js" type="module"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.1.0/handlebars.min.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 </body>
 </html>

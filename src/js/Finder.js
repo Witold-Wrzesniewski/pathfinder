@@ -52,6 +52,7 @@ class Finder {
     element.innerHTML = templates.finder(pageData);
 
     thisFinder.renderGrid(document.querySelector(select.grid));
+    AOS.init();
     thisFinder.initActions();
   }
   renderSummary(){
