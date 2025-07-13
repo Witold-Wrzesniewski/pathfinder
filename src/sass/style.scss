@@ -88,7 +88,9 @@ body {
   height: 100%;
   position: fixed;
   .popup {
+    color: #000;
     position: relative;
+    text-transform: uppercase;
     top: 50%;
     transform: translateY(-50%);
     background: #fff;
@@ -106,6 +108,12 @@ body {
         height: 100%;
         object-fit: cover;
       }
+    }
+    h1, .content {
+      width: max-content;
+      margin-left: auto;
+      margin-right: auto;
+      margin-bottom: 50px;
     }
   }
 }
