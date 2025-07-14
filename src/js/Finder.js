@@ -1,5 +1,6 @@
 import {select, templates} from './settings.js';
 import Alert from './Alert.js';
+import Summary from './Summary.js';
 
 class Finder {
   constructor(element){
@@ -7,8 +8,6 @@ class Finder {
 
     thisFinder.dom = {};
     thisFinder.dom.wrapper = element;
-    thisFinder.dom.summary = document.querySelector(select.summary);
-    thisFinder.dom.summaryContent = document.querySelector(select.summaryContent);
 
     thisFinder.grid = [];
     thisFinder.step = 1;
@@ -55,16 +54,7 @@ class Finder {
     thisFinder.renderGrid(document.querySelector(select.grid));
     AOS.init();
     thisFinder.initActions();
-  }
-  renderSummary(){
-    const thisFinder = this;
-    
-    thisFinder.dom.summaryContent.innerHTML = templates.summary({
-      checkedFields: thisFinder.grid.flat().filter((elem) => elem.checked).length,
-      maxLength: thisFinder.routes.at(-1).length,
-      minLength: thisFinder.routes[0].length,
-    });
-    thisFinder.dom.summary.classList.remove('d-none');
+    thisFinder.summary = new Summary(select.summary);
   }
   renderGrid(element){
     const thisFinder = this;
@@ -120,7 +110,11 @@ class Finder {
         if(thisFinder.start && thisFinder.finish){
           thisFinder.drawRoute(thisFinder.start, thisFinder.finish);
           thisFinder.step = 3;
-          thisFinder.renderSummary();
+          thisFinder.summary.render({
+            checkedFields: thisFinder.grid.flat().filter((elem) => elem.checked).length,
+            maxLength: thisFinder.routes.at(-1).length,
+            minLength: thisFinder.routes[0].length,
+          });
         }
         else
           return;
@@ -138,9 +132,6 @@ class Finder {
       }
 
       thisFinder.render(thisFinder.dom.wrapper);
-    });
-    document.querySelector(select.popupClose).addEventListener('click', function(event){
-      thisFinder.dom.summary.classList.add('d-none');
     });
   }
   getNeighbours(field){
