@@ -1,4 +1,5 @@
 import {select, templates} from './settings.js';
+import Alert from './Alert.js';
 
 class Finder {
   constructor(element){
@@ -49,7 +50,7 @@ class Finder {
     }
     element.innerHTML = '';
     element.innerHTML = templates.finder(pageData);
-    thisFinder.dom.alert = document.querySelector(select.alert);
+    thisFinder.alert = new Alert(select.alert);
 
     thisFinder.renderGrid(document.querySelector(select.grid));
     AOS.init();
@@ -176,16 +177,11 @@ class Finder {
     
     return result;
   }
-  alert(message){
-    const thisFinder = this;
-    thisFinder.dom.alert.innerHTML = templates.alert({alertText: message});
-    thisFinder.dom.alert.classList.add('visible');
-    thisFinder.dom.alert.classList.remove('invisible');
-  }
+ 
   toggleField(element){
     const thisFinder = this;
 
-    thisFinder.dom.alert.classList.add('invisible');
+    thisFinder.alert.hide();
     const field = thisFinder.grid[parseInt(element.getAttribute('data-col'))][parseInt(element.getAttribute('data-row'))];
     const neighbours = thisFinder.getNeighbours(field);
 
@@ -210,7 +206,7 @@ class Finder {
       }
       else{
         field.checked = true;
-        thisFinder.alert('Field can\'t be unselected.');
+        thisFinder.alert.show('Field can\'t be unselected.');
       }
       thisFinder.renderGrid(document.querySelector(select.grid));
       return;
@@ -227,7 +223,7 @@ class Finder {
       thisFinder.renderGrid(document.querySelector(select.grid));
     }
     else {
-      thisFinder.alert('Field must adjoin already selected field');
+      thisFinder.alert.show('Field must adjoin already selected field');
     }
     thisFinder.renderGrid(document.querySelector(select.grid));
   }
