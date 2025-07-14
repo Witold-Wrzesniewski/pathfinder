@@ -49,6 +49,7 @@ class Finder {
     }
     element.innerHTML = '';
     element.innerHTML = templates.finder(pageData);
+    thisFinder.dom.alert = document.querySelector(select.alert);
 
     thisFinder.renderGrid(document.querySelector(select.grid));
     AOS.init();
@@ -183,7 +184,6 @@ class Finder {
   }
   toggleField(element){
     const thisFinder = this;
-    thisFinder.dom.alert = document.querySelector(select.alert);
 
     thisFinder.dom.alert.classList.add('invisible');
     const field = thisFinder.grid[parseInt(element.getAttribute('data-col'))][parseInt(element.getAttribute('data-row'))];
